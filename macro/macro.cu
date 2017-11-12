@@ -4,6 +4,7 @@
 #include "fp16_conversion.h"   // host function for half conversion
 
 #define TWO_PI             6.28318530717959f
+#define TWO_PI_H	__float2half(6.28318530717959f)
 //#define TWO_PI             6.28
 
 inline
@@ -27,7 +28,9 @@ void myTest(int n, float a, const float *x, half *y)
 
 	if(gid<n) {
 		//y[gid] = __hadd(a_half, TWO_PI);  // error: default as double
-		y[gid] = __hadd(a_half, __float2half(TWO_PI)); 
+		//y[gid] = __hadd(a_half, __float2half(TWO_PI));  // works
+		y[gid] = __hadd(a_half, TWO_PI_H); 
+		//y[gid] = -a_half; // error: use hneg
 	}
 }
 
@@ -42,7 +45,7 @@ int main(int argc, char** argv) {
 
   const int n = 10;
 
-  const float a = 2.f; 
+  const float a = 1.f; 
   printf("a = %f\n", a);
 
   float *x;
