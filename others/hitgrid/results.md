@@ -113,7 +113,7 @@ device 0 : Tesla P100-SXM2-16GB
 ### add
 fp 32
 
-Note: directly use v = t1 + t2 won't generate the desired sass code.
+Note: directly using v = t1 + t2 won't generate the desired sass code. Here, use inline ptx instead.
 ```c
         asm volatile (
                         "add.f32 %0, %1, %2;\n\t" : "=f"(v) : "f"(t1), "f"(t2)
