@@ -52,5 +52,5 @@ sass
 ```
 
 device 0 : Tesla P100-SXM2-16GB
-(fp32 cmp) clocks: 128
-(fp16 cmp) clocks: 128
+*(fp32 cmp) clocks: 128
+*(fp16 cmp) clocks: 128
