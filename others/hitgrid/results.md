@@ -112,11 +112,31 @@ device 0 : Tesla P100-SXM2-16GB
 
 ### add
 fp 32
+
+Note: directly use v = t1 + t2 won't generate the desired sass code.
 ```c
+        asm volatile (
+                        "add.f32 %0, %1, %2;\n\t" : "=f"(v) : "f"(t1), "f"(t2)
+                     );
 
 ```
 
 ```bash
+        /*0228*/                   BAR.SYNC 0x0;                      /* 0xf0a81b8000070000 */
+        /*0230*/                   CS2R RZ, SR_CLOCKLO;               /* 0x50c80000050700ff */
+        /*0238*/                   CS2R R9, SR_CLOCKLO;               /* 0x50c8000005070009 */
+                                                                      /* 0x007fbc03fde01fef */
+        /*0248*/                   MOV R9, R9;                        /* 0x5c98078000970009 */
+        /*0250*/                   MOV R9, R9;                        /* 0x5c98078000970009 */
+        /*0258*/                   FADD R0, R0, R8;                   /* 0x5c58000000870000 */
+                                                                      /* 0x007fbc00fe201fef */
+        /*0268*/                   MOV R0, R0;                        /* 0x5c98078000070000 */
+        /*0270*/                   CS2R RZ, SR_CLOCKLO;               /* 0x50c80000050700ff */
+        /*0278*/                   CS2R R8, SR_CLOCKLO;               /* 0x50c8000005070008 */
+                                                                      /* 0x0067bc03fde01fef */
+        /*0288*/                   MOV R8, R8;                        /* 0x5c98078000870008 */
+        /*0290*/                   MOV R8, R8;                        /* 0x5c98078000870008 */
+        /*0298*/                   BAR.SYNC 0x0;                      /* 0xf0a81b8000070000 */
 ```
 
 
