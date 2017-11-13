@@ -168,3 +168,57 @@ device 0 : Tesla P100-SXM2-16GB
 * (fp32 add) clocks: 128
 * (fp16 add) clocks: 128
 
+
+### multiplication
+fp 32
+```c        
+asm volatile ("mul.f32 %0, %1, %2;\n\t"
+               : "=f"(v) : "f"(t1) , "f"(t2));
+```
+
+```bash
+        /*0228*/                   BAR.SYNC 0x0;                      /* 0xf0a81b8000070000 */
+        /*0230*/                   CS2R RZ, SR_CLOCKLO;               /* 0x50c80000050700ff */
+        /*0238*/                   CS2R R9, SR_CLOCKLO;               /* 0x50c8000005070009 */
+                                                                      /* 0x007fbc03fde01fef */
+        /*0248*/                   MOV R9, R9;                        /* 0x5c98078000970009 */
+        /*0250*/                   MOV R9, R9;                        /* 0x5c98078000970009 */
+        /*0258*/                   FMUL R0, R0, R8;                   /* 0x5c68000000870000 */
+                                                                      /* 0x007fbc00fe201fef */
+        /*0268*/                   MOV R0, R0;                        /* 0x5c98078000070000 */
+        /*0270*/                   CS2R RZ, SR_CLOCKLO;               /* 0x50c80000050700ff */
+        /*0278*/                   CS2R R8, SR_CLOCKLO;               /* 0x50c8000005070008 */
+                                                                      /* 0x0067bc03fde01fef */
+        /*0288*/                   MOV R8, R8;                        /* 0x5c98078000870008 */
+        /*0290*/                   MOV R8, R8;                        /* 0x5c98078000870008 */
+        /*0298*/                   BAR.SYNC 0x0;                      /* 0xf0a81b8000070000 */
+
+```
+
+fp 16
+```c
+result = __hmul(a_half, b_half);
+```
+
+
+```bash
+        /*0188*/                   BAR.SYNC 0x0;                     /* 0xf0a81b8000070000 */
+        /*0190*/                   CS2R RZ, SR_CLOCKLO;              /* 0x50c80000050700ff */
+        /*0198*/                   CS2R R9, SR_CLOCKLO;              /* 0x50c8000005070009 */
+                                                                     /* 0x00643c03fde01fef */
+        /*01a8*/                   MOV R9, R9;                       /* 0x5c98078000970009 */
+        /*01b0*/                   MOV R9, R9;                       /* 0x5c98078000970009 */
+        /*01b8*/                   HMUL2 R0, R0.H0_H0, R0.H1_H1;     /* 0x5d09000030070000 */
+                                                                     /* 0x007fbc03fde007f1 */
+        /*01c8*/                   CS2R RZ, SR_CLOCKLO;              /* 0x50c80000050700ff */
+        /*01d0*/                   CS2R R10, SR_CLOCKLO;             /* 0x50c800000507000a */
+        /*01d8*/                   MOV R10, R10;                     /* 0x5c98078000a7000a */
+                                                                     /* 0x007fbc033de01fef */
+        /*01e8*/                   MOV R10, R10;                     /* 0x5c98078000a7000a */
+        /*01f0*/                   BAR.SYNC 0x0;                     /* 0xf0a81b8000070000 */
+```
+
+
+device 0 : Tesla P100-SXM2-16GB
+(fp32 mul) clocks: 128
+(fp16 mul) clocks: 128
