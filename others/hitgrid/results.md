@@ -108,3 +108,42 @@ sass
 device 0 : Tesla P100-SXM2-16GB
 * (fp32 floor) clocks: 128
 * (fp16 floor) clocks: 128
+
+
+### add
+fp 32
+```c
+
+```
+
+```bash
+```
+
+
+fp 16
+
+```c
+result = __hadd(a_half, b_half);
+```
+
+```bash
+        /*0188*/                   BAR.SYNC 0x0;                     /* 0xf0a81b8000070000 */
+        /*0190*/                   CS2R RZ, SR_CLOCKLO;              /* 0x50c80000050700ff */
+        /*0198*/                   CS2R R9, SR_CLOCKLO;              /* 0x50c8000005070009 */
+                                                                     /* 0x00643c03fde01fef */
+        /*01a8*/                   MOV R9, R9;                       /* 0x5c98078000970009 */
+        /*01b0*/                   MOV R9, R9;                       /* 0x5c98078000970009 */
+        /*01b8*/                   HADD2 R0, R0.H0_H0, R0.H1_H1;     /* 0x5d11000030070000 */
+                                                                     /* 0x007fbc03fde007f1 */
+        /*01c8*/                   CS2R RZ, SR_CLOCKLO;              /* 0x50c80000050700ff */
+        /*01d0*/                   CS2R R10, SR_CLOCKLO;             /* 0x50c800000507000a */
+        /*01d8*/                   MOV R10, R10;                     /* 0x5c98078000a7000a */
+                                                                     /* 0x007fbc033de01fef */
+        /*01e8*/                   MOV R10, R10;                     /* 0x5c98078000a7000a */
+        /*01f0*/                   BAR.SYNC 0x0;                     /* 0xf0a81b8000070000 */
+
+```
+
+device 0 : Tesla P100-SXM2-16GB
+(fp16 add) clocks: 128
+
