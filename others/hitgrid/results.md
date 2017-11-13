@@ -22,8 +22,7 @@ sass
         /*01d8*/                   CS2R R8, SR_CLOCKLO;              /* 0x50c8000005070008 */
 ```
 
-device 0 : Tesla P100-SXM2-16GB
-(fp32 cmp) clocks: 128
+
 
 fp 16
 ```c
@@ -53,4 +52,5 @@ sass
 ```
 
 device 0 : Tesla P100-SXM2-16GB
+(fp32 cmp) clocks: 128
 (fp16 cmp) clocks: 128
