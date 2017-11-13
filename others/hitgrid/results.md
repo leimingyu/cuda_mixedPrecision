@@ -165,5 +165,6 @@ result = __hadd(a_half, b_half);
 ```
 
 device 0 : Tesla P100-SXM2-16GB
+(fp32 add) clocks: 128
 (fp16 add) clocks: 128
 
