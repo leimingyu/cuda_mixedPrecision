@@ -220,5 +220,5 @@ result = __hmul(a_half, b_half);
 
 
 device 0 : Tesla P100-SXM2-16GB
-(fp32 mul) clocks: 128
-(fp16 mul) clocks: 128
+* (fp32 mul) clocks: 128
+* (fp16 mul) clocks: 128
