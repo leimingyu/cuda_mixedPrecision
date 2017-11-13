@@ -54,3 +54,57 @@ sass
 device 0 : Tesla P100-SXM2-16GB
 * (fp32 cmp) clocks: 128
 * (fp16 cmp) clocks: 128
+
+
+### floor
+fp 32
+```c
+htime = floorf(a);
+```
+
+sass
+```bash
+        /*0148*/                   BAR.SYNC 0x0;                     /* 0xf0a81b8000070000 */
+        /*0150*/                   CS2R RZ, SR_CLOCKLO;              /* 0x50c80000050700ff */
+        /*0158*/                   CS2R R7, SR_CLOCKLO;              /* 0x50c8000005070007 */
+                                                                     /* 0x00643c03fde01fef */
+        /*0168*/                   MOV R7, R7;                       /* 0x5c98078000770007 */
+        /*0170*/                   MOV R7, R7;                       /* 0x5c98078000770007 */
+        /*0178*/                   F2F.F32.F32.FLOOR R0, R0;         /* 0x5ca8048000070a00 */
+                                                                     /* 0x007fbc00fe201fef */
+        /*0188*/                   MOV R0, R0;                       /* 0x5c98078000070000 */
+        /*0190*/                   CS2R RZ, SR_CLOCKLO;              /* 0x50c80000050700ff */
+        /*0198*/                   CS2R R8, SR_CLOCKLO;              /* 0x50c8000005070008 */
+                                                                     /* 0x0067bc03fde01fef */
+        /*01a8*/                   MOV R8, R8;                       /* 0x5c98078000870008 */
+        /*01b0*/                   MOV R8, R8;                       /* 0x5c98078000870008 */
+        /*01b8*/                   BAR.SYNC 0x0;                     /* 0xf0a81b8000070000 */
+```
+
+fp 16
+
+```c
+htime = hfloor(a_half);
+```
+
+sass
+```bash
+        /*0150*/                   BAR.SYNC 0x0;                     /* 0xf0a81b8000070000 */
+        /*0158*/                   CS2R RZ, SR_CLOCKLO;              /* 0x50c80000050700ff */
+                                                                     /* 0x007fbc03fde01fef */
+        /*0168*/                   CS2R R7, SR_CLOCKLO;              /* 0x50c8000005070007 */
+        /*0170*/                   MOV R7, R7;                       /* 0x5c98078000770007 */
+        /*0178*/                   MOV R7, R7;                       /* 0x5c98078000770007 */
+                                                                     /* 0x007fbc00fe20190f */
+        /*0188*/                   F2F.F16.F16.FLOOR R0, R0;         /* 0x5ca8048000070500 */
+        /*0190*/                   CS2R RZ, SR_CLOCKLO;              /* 0x50c80000050700ff */
+        /*0198*/                   CS2R R8, SR_CLOCKLO;              /* 0x50c8000005070008 */
+                                                                     /* 0x0067bc03fde01fef */
+        /*01a8*/                   MOV R8, R8;                       /* 0x5c98078000870008 */
+        /*01b0*/                   MOV R8, R8;                       /* 0x5c98078000870008 */
+        /*01b8*/                   BAR.SYNC 0x0;                     /* 0xf0a81b8000070000 */
+```
+
+device 0 : Tesla P100-SXM2-16GB
+(fp32 floor) clocks: 128
+(fp16 floor) clocks: 128
