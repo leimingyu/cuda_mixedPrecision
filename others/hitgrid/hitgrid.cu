@@ -20,7 +20,6 @@ inline cudaError_t checkCuda(cudaError_t result)
 	return result;
 }
 
-/*
 __global__ void fp32_cmp(int n, float a, float *x, half *y, uint *start_time, uint *end_time)
 {
 	int gid = threadIdx.x + blockDim.x * blockIdx.x;
@@ -31,7 +30,7 @@ __global__ void fp32_cmp(int n, float a, float *x, half *y, uint *start_time, ui
 	__syncthreads();
 
 	start_time1 = clock();
-	htime = (a>0.f);
+	htime = (a>=0.f);
 	end_time1 = clock();
 
 	__syncthreads();
@@ -45,7 +44,6 @@ __global__ void fp32_cmp(int n, float a, float *x, half *y, uint *start_time, ui
 		end_time[0] = end_time1;
 	}
 }
-*/
 
 
 /*
@@ -239,7 +237,7 @@ __global__ void fp32_mul(int n, float a, float b, float *x, half *y, uint *start
 }
 */
 
-
+/*
 __global__ void fp16_mul(int n, float a, float b,  float *x, half *y, uint *start_time, uint *end_time)
 {
 	int gid = threadIdx.x + blockDim.x * blockIdx.x;
@@ -268,6 +266,7 @@ __global__ void fp16_mul(int n, float a, float b,  float *x, half *y, uint *star
 	y[gid] = result;
 
 }
+*/
 
 int main(int argc, char** argv) {
 
@@ -300,11 +299,9 @@ int main(int argc, char** argv) {
 
 
 
-/*
 	fp32_cmp<<<1, 32>>>(n, a, x, y, start_time, end_time);
 	checkCuda(cudaDeviceSynchronize());
 	printf("(fp32 cmp) clocks: %d\n", end_time - start_time);
-*/
 
 /*
 	fp16_cmp<<<1, 32>>>(n, a, x, y, start_time, end_time);
@@ -343,9 +340,11 @@ int main(int argc, char** argv) {
 	printf("(fp32 mul) clocks: %d\n", end_time - start_time);
 */
 
+/*
 	fp16_mul<<<1, 32>>>(n, a, b, x, y, start_time, end_time);
 	checkCuda(cudaDeviceSynchronize());
 	printf("(fp16 mul) clocks: %d\n", end_time - start_time);
+*/
 
 #if LOG
 	printf("\nx :\n");
