@@ -18,10 +18,12 @@ cudaError_t checkCuda(cudaError_t result)
 __global__
 void myTest(float *x, half *y)
 {
-    float v=2.51f;
+    //float v=2.51f;
     //float v=2.5f;
     //float v=-2.5f;
     //float v=-2.51f;
+
+	float v = 27.999878f;
     x[0] = floorf(v);
     y[0] = hfloor(__float2half(v));
 }
