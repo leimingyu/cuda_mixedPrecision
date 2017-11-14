@@ -1,7 +1,7 @@
 ### comparison
 fp 32
 ```c
-htime = (a>0.f);
+htime = (a>=0.f);
 ```
 
 sass
@@ -13,13 +13,17 @@ sass
         /*0190*/                   MOV R7, R7;                       /* 0x5c98078000770007 */
         /*0198*/                   MOV R7, R7;                       /* 0x5c98078000770007 */
                                                                      /* 0x00643c03fde01fef */
-        /*01a8*/                   FSETP.GT.AND P0, PT, R0, RZ, PT;  /* 0x5bb403800ff70007 */
+        /*01a8*/                   FSETP.GE.AND P0, PT, R0, RZ, PT;  /* 0x5bb603800ff70007 */
         /*01b0*/                   SEL R0, RZ, 0x1, !P0;             /* 0x38a004000017ff00 */
         /*01b8*/                   I2F.F32.S32 R0, R0;               /* 0x5cb8000000072a00 */
                                                                      /* 0x007fbc00fe201fef */
         /*01c8*/                   MOV R0, R0;                       /* 0x5c98078000070000 */
         /*01d0*/                   CS2R RZ, SR_CLOCKLO;              /* 0x50c80000050700ff */
         /*01d8*/                   CS2R R8, SR_CLOCKLO;              /* 0x50c8000005070008 */
+                                                                     /* 0x0067bc03fde01fef */
+        /*01e8*/                   MOV R8, R8;                       /* 0x5c98078000870008 */
+        /*01f0*/                   MOV R8, R8;                       /* 0x5c98078000870008 */
+        /*01f8*/                   BAR.SYNC 0x0;                     /* 0xf0a81b8000070000 */
 ```
 
 
