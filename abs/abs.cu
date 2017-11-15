@@ -82,6 +82,34 @@ void mytest_v1(float v)
   cudaFree(y);
 }
 
+__global__ void Kern_half2_abs(float *x)
+{
+	half2 v2 = __floats2half2_rn(1.1f, -2.1f);
+
+	printf("value in half2 : %f %f\n", __half2float(__low2half(v2)),
+			__half2float(__high2half(v2)));
+
+	// abs()
+	*((int*)(&v2)) &= 0x7FFF7FFF;
+
+	printf("value in half2 (abs) : %f %f\n", __half2float(__low2half(v2)),
+			__half2float(__high2half(v2)));
+
+}
+
+
+void half2_abs(void)
+{
+  float *x;
+  checkCuda(cudaMallocManaged(&x, sizeof(float)));
+
+  Kern_half2_abs<<<1, 1>>>(x);
+
+
+  checkCuda(cudaDeviceSynchronize());
+  cudaFree(x);
+}
+
 int main(int argc, char** argv) {
 
   int devid =0;
@@ -100,6 +128,7 @@ int main(int argc, char** argv) {
   printf("device %d : %s\n", devid, prop.name);
 
 
+  /*
   printf("\ntest 1\n");
   float v_pos = 1.111f;
   float v_neg = -1.111f;
@@ -118,6 +147,18 @@ int main(int argc, char** argv) {
   mytest_v1(v_pos);
   mytest_v1(v_neg);
 
+  printf("\ntest 3\n");
+  v_pos = 1.3333f;
+  v_neg = -1.3333f;
+
+  mytest(v_pos);
+  mytest(v_neg);
+  mytest_v1(v_pos);
+  mytest_v1(v_neg);
+  */
+
+
+  half2_abs();
 
   return 0;
 }
