@@ -23,8 +23,25 @@ void myTest(float *x, half *y)
     //float v=-2.5f;
     //float v=-2.51f;
 
-	float v = 27.999878f;
+	//float v = 27.999878f;   // 27 , 28
+	//float v = 27.999278f; 	// 27f, 28h
+	//float v = 27.998278f; // 27, 28
+	//float v = 27.995278f;  // 27, 28
+	//float v = 27.994278f;  //  27, 28
+	//float v = 27.994f;  //  27, 28
+	//float v = 27.991f;  //  27, 27 
+	//float v = 27.992f;  //  27, 27
+	//float v = 27.993f;  //  27, 28 
+	//float v = 27.9921f;  //  27, 
+	float v = 27.9922f;  //  27, 
+	//float v = 27.99f;  //  27, 27 
     x[0] = floorf(v);
+
+	half vHalf = __float2half(v);
+	float vHalf_fp32 = __half2float(vHalf);
+
+	printf("fp32: %f, fp16 %f, diff %f\n", v, vHalf_fp32, vHalf_fp32 - v);
+
     y[0] = hfloor(__float2half(v));
 }
 
